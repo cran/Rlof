@@ -1,0 +1,8 @@
+2e48ae9ce2bdc16264ec539e8bd22e0f *DESCRIPTION
+84c93defc604d43f62a32f5eb03f58cb *NAMESPACE
+233cd5539b92f7cfe128452117a88d6d *R/Rlof.R
+42b968fb2fa5b726bbf4e2cd3c0a2ba5 *man/distmc.Rd
+3b6d83b8e69ce1aaa891803b716b2520 *man/lof.Rd
+42e552beb7b2968269a4ef8d231bc649 *src/Makevars
+25a31ac44f483e0a7acde8e69f853a94 *src/distance.c
+cc1eeb2757fbc14680bd4ed8bad527e4 *src/distance.h
