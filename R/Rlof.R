@@ -14,7 +14,8 @@ distmc <- function(x, method = "euclidean", diag = FALSE, upper = FALSE, p = 2)
     N <- nrow(x <- as.matrix(x))
     d <- .C("Rdistance", x = as.double(x), nr = N, nc = ncol(x), 
         d = double(N * (N - 1)/2), diag = as.integer(FALSE), 
-        method = as.integer(method), p = as.double(p), DUP = FALSE, 
+        method = as.integer(method), p = as.double(p), 
+        #DUP = FALSE, 
         NAOK = TRUE, PACKAGE = "Rlof")$d
     attr(d, "Size") <- N
     attr(d, "Labels") <- dimnames(x)[[1L]]
@@ -28,7 +29,7 @@ distmc <- function(x, method = "euclidean", diag = FALSE, upper = FALSE, p = 2)
     return(d)
 }
 
-lof <- function(data, k, ...)
+lof <- function(data, k, cores = NULL, ...)
 {
 	
   if(is.null(k))
@@ -36,6 +37,9 @@ lof <- function(data, k, ...)
   
   if(!is.numeric(k))
   	stop('k is not numeric')
+  	
+  if(!is.numeric(cores) && !is.null(cores))
+  	stop('cores is not numeric')
 
   data <- as.matrix(data)
   
@@ -47,10 +51,9 @@ lof <- function(data, k, ...)
   if(max(v.k) >= dim(data)[1])
   	stop('the maximum k value has to be less than the length of the data')
   
-  registerDoMC()
 
 # obtain the k nearest neighbors and their distance from each observation
-  distdata <- f.dist.to.knn(data,max(v.k), ...)
+  distdata <- f.dist.to.knn(data,max(v.k), cores, ...)
   
   p <- dim(distdata)[2L]
  
@@ -60,6 +63,7 @@ lof <- function(data, k, ...)
   dist.end <- dim(distdata)[1]
   ik <- numeric()
 
+  registerDoParallel(cores=cores)
   m.lof <- foreach(ik = v.k, .combine=cbind) %dopar% 
   {
   	lrddata <- f.reachability(distdata,ik)
@@ -79,28 +83,29 @@ lof <- function(data, k, ...)
   return(m.lof)
 }
 
-f.dist.to.knn <- function(dataset,neighbors,...)
+f.dist.to.knn <- function(dataset,neighbors,cores,...)
 {	
 	m.dist <- as.matrix(distmc(dataset, ...))
 	num.col <- dim(m.dist)[2]
 	
-	l.knndist<-mclapply(c(1:num.col),function(i)
+	l.knndist<-lapply(c(1:num.col),function(i)
 	{
 		order.x <- order(m.dist[,i])
 		kdist<-m.dist[,i][order.x[neighbors+1]]
 		numnei <- sum(m.dist[,i] <= kdist)
 		data.frame(v.order = order.x[2:numnei], v.dist = m.dist[,i][order.x[2:numnei]])
 	})
-	rm(m.dist)
-	maxnum <- max(unlist(mclapply(l.knndist,function(x){dim(x)[1]})))
 	
+	rm(m.dist)
+	maxnum <- max(unlist(lapply(l.knndist,function(x){dim(x)[1]})))
+	
+	registerDoParallel(cores=cores)
 	i <- numeric()
 	knndist <- foreach(i = 1:num.col, .combine=cbind) %dopar%
 	{
 		len <- dim(l.knndist[[i]])[1]
 		c(l.knndist[[i]]$v.order,rep(NA,(maxnum-len)),l.knndist[[i]]$v.dist,rep(NA,(maxnum-len)))
 	}
-	
 	knndist
 }
 
