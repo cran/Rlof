@@ -29,11 +29,11 @@ LOF: Identifying density-based local outliers. In Proceedings of the ACM SIGMOD
 International Conference on Management of Data.}
 \author{Yingsong Hu, Wayne Murray and Yin Shan, Australia}
 \examples{
-#---- Detecting the top outliers using the LOF algorithm 
-#---- with k = 5,6,7,8,9 and 10, respectively----
+\dontrun{---- Detecting the top outliers using the LOF algorithm} 
+\dontrun{---- with k = 5,6,7,8,9 and 10, respectively----}
 data(iris)
-df<-data.frame(iris[-5])
-df.lof<-lof(df,c(5:10),cores=2)
+df<-iris[-5]
+\donttest{df.lof<-lof(df,c(5:10),cores=2)}
 }
 \keyword{Rlof}
 \keyword{lof}

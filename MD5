@@ -1,9 +1,9 @@
-79b982f7ba397a1cef2d42f3594ce3fc *DESCRIPTION
+df53800b6f7c80fe893919200490dfc8 *DESCRIPTION
 bbace1c0da9170d1dfaafee32c6276ec *NAMESPACE
 72860f9d280022e7cef8c8d89f342f8e *R/Rlof.R
 43bb365d357e66b413271716be9ae57b *man/Rlof-package.Rd
-42b968fb2fa5b726bbf4e2cd3c0a2ba5 *man/distmc.Rd
-8f0bdd99ba1695f8ed6a8be6803002e6 *man/lof.Rd
+255736e39283479f504a4296bd507e7f *man/distmc.Rd
+93fdb325e6664a26259e5f0d51cb7c70 *man/lof.Rd
 e38051a0f27f2d7a08685387e167a67c *src/Makevars
 25a31ac44f483e0a7acde8e69f853a94 *src/distance.c
 cc1eeb2757fbc14680bd4ed8bad527e4 *src/distance.h

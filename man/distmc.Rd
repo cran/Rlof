@@ -115,8 +115,8 @@ distmc(x, method = "euclidean", diag = FALSE, upper = FALSE, p = 2)
 }
 \examples{
 data(iris)
-df<-data.frame(iris[-5])
-dist.data<-distmc(df, 'manhattan')
+df<-iris[-5]
+dist.data<-distmc(df,'manhattan')
 }
 \keyword{distmc}
 \keyword{lof}
