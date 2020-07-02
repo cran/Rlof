@@ -1,32 +1,27 @@
 distmc <- function(x, method = "euclidean", diag = FALSE, upper = FALSE, p = 2)
 {
-    if (!is.na(pmatch(method, "euclidian"))) 
-        method <- "euclidean"
-    METHODS <- c("euclidean", "maximum", "manhattan", "canberra", 
-        "binary", "minkowski")
+    if(!is.na(pmatch(method, "euclidian")))
+	method <- "euclidean"
+
+    METHODS <- c("euclidean", "maximum",
+		 "manhattan", "canberra", "binary", "minkowski")
     method <- pmatch(method, METHODS)
-    if (is.na(method)) 
-        stop("invalid distance method")
-    if (method == -1) 
-        stop("ambiguous distance method")
-    if(!is.numeric(as.matrix(x)))
-	  	stop('the data contains non-numeric data type')
-    N <- nrow(x <- as.matrix(x))
-    d <- .C("Rdistance", x = as.double(x), nr = N, nc = ncol(x), 
-        d = double(N * (N - 1)/2), diag = as.integer(FALSE), 
-        method = as.integer(method), p = as.double(p), 
-        #DUP = FALSE, 
-        NAOK = TRUE, PACKAGE = "Rlof")$d
-    attr(d, "Size") <- N
-    attr(d, "Labels") <- dimnames(x)[[1L]]
-    attr(d, "Diag") <- diag
-    attr(d, "Upper") <- upper
-    attr(d, "method") <- METHODS[method]
-    if (method == 6) 
-        attr(d, "p") <- p
-    attr(d, "call") <- match.call()
-    class(d) <- "dist"
-    return(d)
+    if(is.na(method))
+	stop("invalid distance method")
+    if(method == -1)
+	stop("ambiguous distance method")
+
+    x <- as.matrix(x)
+    N  <- nrow(x)
+    attrs <- if(method == 6L)
+        list(Size = N, Labels =  dimnames(x)[[1L]], Diag = diag,
+             Upper = upper, method = METHODS[method],
+             p = p, call = match.call(), class = "dist")
+    else
+        list(Size = N, Labels =  dimnames(x)[[1L]], Diag = diag,
+             Upper = upper, method = METHODS[method],
+             call = match.call(), class = "dist")
+    .Call(RCdist, x, method, attrs, p)
 }
 
 lof <- function(data, k, cores = NULL, ...)

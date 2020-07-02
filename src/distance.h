@@ -1,8 +1,6 @@
-#ifndef DISTANCE_H
-#define DISTANCE_H
-extern "C" {
-	void Rdistance(double *x, int *nr, int *nc, double *d, int *diag,
-				   int *method, double *p);
-}
+#include <R.h>
+#include <Rinternals.h>
 
-#endif // DISTANCE_H
+SEXP RCdist(SEXP x, SEXP method, SEXP attrs, SEXP p);
+
+
