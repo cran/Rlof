@@ -16,9 +16,7 @@ Date: \tab 2015-09-10\cr
 Depends: \tab R (>= 2.14.0), doParallel, foreach\cr
 License: \tab GPL (>= 2)\cr
 URL: \tab \url{https://CRAN.R-project.org/package=Rlof}\cr
-What's new: \tab i) a new optional parameter provided to specify the
-number of cores used for parallel computing \cr
-\tab ii) support of Windows system \cr 
+What's new: \tab bug fix
 }
 }
 

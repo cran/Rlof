@@ -1,5 +1,5 @@
 Package: Rlof
-Version: 1.1.2
+Version: 1.1.3
 Title: R Parallel Implementation of Local Outlier Factor(LOF)
 Author: Yingsong Hu, Wayne Murray and Yin Shan, Australia.
 Maintainer: Yingsong Hu <yingsonghu@hotmail.com>
@@ -8,5 +8,5 @@ Description: R parallel implementation of Local Outlier Factor(LOF) which uses m
 License: GPL (>= 2)
 NeedsCompilation: yes
 Repository: CRAN
-Packaged: 2020-07-02 13:41:13 UTC; yingsong
-Date/Publication: 2020-07-02 14:00:02 UTC
+Packaged: 2022-10-15 08:07:47 UTC; yingsong
+Date/Publication: 2022-10-16 07:35:34 UTC
